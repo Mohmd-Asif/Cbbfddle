@@ -26,4 +26,5 @@ def faceRecognition():
         return jsonify({"Status":True,"Resp":images})
     elif request.method == 'GET':
         return jsonify({"Hello":"World"})
-app.run(host='localhost',port=3030)
+if __name__ == "__main__":
+    app.run()
