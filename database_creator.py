@@ -12,8 +12,8 @@ for known_image in os.listdir(known_image_path):
     img = fa.load_image_file(os.path.join(known_image_path,known_image))
     img_encoding = fa.face_encodings(img)
     img_encoding = pickle.dumps(img_encoding,protocol=pickle.HIGHEST_PROTOCOL)
-    cur = connection.cursor()
-    cur.execute("INSERT INTO USERS VALUES(?,?)",(os.path.join(known_image_path,known_image),img_encoding))
+    current = connection.cursor()
+    current.execute("INSERT INTO USERS VALUES(?,?)",(os.path.join(known_image_path,known_image),img_encoding))
     connection.commit()
 
 connection.close()
