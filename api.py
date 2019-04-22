@@ -7,7 +7,7 @@ app = flask.Flask(__name__)
 
 # app.config['DEBUG'] = True
 
-UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = '/tmp'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
