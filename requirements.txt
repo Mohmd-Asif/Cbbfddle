@@ -8,3 +8,4 @@ urllib3==1.22
 Werkzeug==0.15.2
 wrapt==1.11.1
 gunicorn==19.9.0
+cmake==3.13.3
