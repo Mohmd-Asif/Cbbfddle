@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 import faceRecognition as fr
 app = flask.Flask(__name__)
 
-# app.config['DEBUG'] = True
+app.config['DEBUG'] = True
 
 UPLOAD_FOLDER = '/tmp'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -15,6 +15,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def faceRecognition():
     if request.method == 'POST':
         probable_names = []
+        print(list(request.files.keys()))
         if {'file1','file2','file3','file4','file5'} not in list(request.files.keys()):
            return jsonify({"Status":False,"Response":"File not found"})
         # files = request.files['files']
