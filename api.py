@@ -16,7 +16,7 @@ def faceRecognition():
     if request.method == 'POST':
         probable_names = []
         print(list(request.files.keys()))
-        if set(['file1','file2','file3','file4','file5'])& set(list(request.files.keys())) != ['file1','file2','file3','file4','file5'] :
+        if set(['file1','file2','file3','file4','file5'])& set(list(request.files.keys())) != set(['file1','file2','file3','file4','file5']) :
            return jsonify({"Status":False,"Response":"File not found"})
         # files = request.files['files']
         for (fileno,file) in request.files:
