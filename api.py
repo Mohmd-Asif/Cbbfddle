@@ -16,7 +16,7 @@ def faceRecognition():
     if request.method == 'POST':
         probable_names = []
         if 'files' not in request.files:
-          return jsonify({"Status":False,"Resp":"File not found"})
+          return jsonify({"Status":False,"Response":"File not found"})
         files = request.files['files']
         for file in files:
             if file.filename == '':
