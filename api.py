@@ -3,6 +3,9 @@ import os
 from flask import request,jsonify
 from werkzeug.utils import secure_filename
 import faceRecognition as fr
+import facerecogntition_api as fa
+import sqlite3
+
 app = flask.Flask(__name__)
 
 app.config['DEBUG'] = True
@@ -15,6 +18,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def faceRecognition():
     if request.method == 'POST':
         probable_names = []
+        predictions = []
         print(set(['file1','file2','file3','file4','file0'])&set(list(request.files.keys())))
         if set(['file1','file2','file3','file4','file0'])& set(list(request.files.keys())) != set(['file1','file2','file3','file4','file0']) :
            return jsonify({"Status":False,"Response":"File not found"})
@@ -32,7 +36,18 @@ def faceRecognition():
                 images = set(images)
                 probable_names = set(probable_names)
                 probable_names = list(probable_names & images)
-            
+        with sqlite3.connect('database.db') as connection:
+            for i in probable_names:
+                cur = connection.cursor()
+                cur.execute('''SELECT * FROM USER_LICENSE WHERE FILENAME=?''',i)
+                row = cur.fetchall()
+                if row[3] >=3:
+                    row[2] = 30000
+                else:
+                    row[3]+=1
+                    row[2] = 7
+                cur.execute('UPDATE USER_LICENSE SET CANCELLATION='+row[2]+',PENALTY='+row[3]+' WHERE FILENAME='+row[0])
+                cur.commit()
         return jsonify({"Status":True,"Response":probable_names})
     elif request.method == 'GET':
         return jsonify({"Hello":"World"})

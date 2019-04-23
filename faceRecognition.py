@@ -14,6 +14,6 @@ def face_compare(image_path):
         rows = cur.fetchall()
         for (file_name,image_encoding) in rows:
             image_encoding = pickle.loads(image_encoding)
-            if True in fa.compare_faces(img1_encoding,image_encoding):
+            if True in fa.compare_faces(image_encoding,img1_encoding):
                 detected_files.append(file_name)
     return detected_files

@@ -118,6 +118,8 @@ def face_encodings(face_image, known_face_locations=None, num_jitters=1):
     raw_landmarks = _raw_face_landmarks(face_image, known_face_locations, model="small")
     return [np.array(face_encoder.compute_face_descriptor(face_image, raw_landmark_set, num_jitters)) for raw_landmark_set in raw_landmarks]
 
-
+def get_prediction(known_face_encodings,face_encoding_to_check):
+    prediction = face_distance(known_face_encodings, face_encoding_to_check) 
+    return prediction
 def compare_faces(known_face_encodings, face_encoding_to_check, tolerance=0.5):
-    return list(face_distance(known_face_encodings, face_encoding_to_check) <= tolerance)
+    return list(get_prediction(known_face_encodings,face_encoding_to_check)<= tolerance)
