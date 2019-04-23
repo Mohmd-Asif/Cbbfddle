@@ -14,16 +14,25 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 @app.route('/faceRecognition',methods=['POST','GET'])
 def faceRecognition():
     if request.method == 'POST':
-        if 'file' not in request.files:
+        probable_names = []
+        if 'files' not in request.files:
           return jsonify({"Status":False,"Resp":"File not found"})
-        file = request.files['file']
-        if file.filename == '':
-            return jsonify({"Statues":False,"Resp":"No filename"})
-        filename = secure_filename(file.filename)
-        path =  os.path.join(app.config['UPLOAD_FOLDER'],filename)
-        file.save(path)        
-        images = fr.face_compare(path)
-        return jsonify({"Status":True,"Resp":images})
+        files = request.files['files']
+        for file in files:
+            if file.filename == '':
+                return jsonify({"Status":False,"Response":"No filename"})
+            filename = secure_filename(file.filename)
+            path =  os.path.join(app.config['UPLOAD_FOLDER'],filename)
+            file.save(path)
+            if len(probable_names) == 0:        
+                probable_names = fr.face_compare(path)
+            else:
+                images = fr.face_compare(path)
+                images = set(images)
+                probable_names = set(probable_names)
+                probable_names = list(probable_names & images)
+            
+        return jsonify({"Status":True,"Response":probable_names})
     elif request.method == 'GET':
         return jsonify({"Hello":"World"})
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ import pickle
 connection = sqlite3.connect('database.db')
 
 connection.execute('CREATE TABLE USERS(FILENAME TEXT,ENCODING TEXT)')
-known_image_path = "./test_images/image_database/"
+known_image_path = "./test_images/"
 
 for known_image in os.listdir(known_image_path):
     img = fa.load_image_file(os.path.join(known_image_path,known_image))
