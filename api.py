@@ -15,8 +15,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def faceRecognition():
     if request.method == 'POST':
         probable_names = []
-        print(set(['file1','file2','file3','file4','file5'])&set(list(request.files.keys())))
-        if set(['file1','file2','file3','file4','file5'])& set(list(request.files.keys())) != set(['file1','file2','file3','file4','file5']) :
+        print(set(['file1','file2','file3','file4','file0'])&set(list(request.files.keys())))
+        if set(['file1','file2','file3','file4','file0'])& set(list(request.files.keys())) != set(['file1','file2','file3','file4','file0']) :
            return jsonify({"Status":False,"Response":"File not found"})
         for filekey in request.files:
             file = request.files[filekey]
